@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
-const errors = require("../utils/errors.js");
+// const errors = require("../utils/errors.js");
+const getResponse = require('./getResponse');
 
 module.exports.run = async (bot, message, args) => {
 
@@ -7,25 +8,41 @@ module.exports.run = async (bot, message, args) => {
     message.reply("Usage: p>ban <user> <reason>");
     return;
   }
-  let bUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
-  if(!bUser) message.channel.send("Can't find user!");
-  let bReason = args.slice(1).join(" ") || "None"
+
+  let mentionedMember = message.mentions.members.first() || message.guild.member(args[0]);
+  if(!mentionedMember || mentionedMember == null) return message.channel.send("Please mention a user or provide their user id!");
+  let banReason = args.slice(1).join(" ") != '' ? args.slice(1).join(" ") : 'No reason provided';
   if(!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send("Aww sorry but you are not cool enough to do this");
-  if(bUser.hasPermission("MANAGE_MESSAGES")) return message.channel.send("That person can't be banned bro!");
+  if(mentionedMember.hasPermission("MANAGE_MESSAGES") || !mentionedMember.bannable) return message.channel.send("That person can't be banned bro!");
 
   let banEmbed = new Discord.RichEmbed()
   .setDescription("~Ban~")
   .setColor("#bc0000")
-  .addField("Banned User", `${bUser} with ID ${bUser.id}`)
+  .addField("Banned User", `${mentionedMember} with ID ${mentionedMember.id}`)
   .addField("Banned By", `<@${message.author.id}> with ID ${message.author.id}`)
   .addField("Banned In", message.channel)
   .addField("Time", message.createdAt)
-  .addField("Reason", bReason);
+  .addField("Reason", banReason);
 
-  message.guild.member(bUser).ban(bReason);
-  message.channel.send(banEmbed);
+  let responseMsg = `\:exclamation: | You are banning **${mentionedMember.user.tag}** from **${message.guild.name}**\n\`\`\`Ban Reason:\n\n${banReason}\`\`\`\n \:arrow_right: Please type \`confirm\` or type \`cancel\` `;
+
+  let sentMessage = await message.channel.send(responseMsg);
+
+  let userResponse = await getResponse(message.channel, message.author, ['confirm', 'cancel'], `\:no: | That is an invalid response. Please try again.`).catch(console.log);
+  console.log(userResponse);
+  sentMessage.delete();
+  if (!userResponse | userResponse == 'cancel') {
+      message.channel.send(`\:information_source: | **${mentionedMember.user.tag}** was not banned!`)
+  } else {
+      mentionedMember.ban(banReason).then( () => {
+        message.channel.send(banEmbed);
+      }).catch(e => {
+          message.channel.send(`**Warning** | Failed to ban **${mentionedMember.user.tag}**`)
+          throw new Error(e);
+      })
+  }
 }
 
-module.exports.help = {
+exports.help = {
   name:"ban"
 }
