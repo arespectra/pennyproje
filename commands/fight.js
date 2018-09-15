@@ -35,7 +35,7 @@ module.exports.run = async (bot, message, args) => {
   }
 
 
-  if(fMember.id === 450615706313293835){
+  if(fMember.id === "450615706313293835"){
     if(!questL[message.author.id]){
       questL[message.author.id] = {
         quest: "1"
