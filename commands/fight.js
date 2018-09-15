@@ -8,6 +8,7 @@ const wins = require("../fightlog/wins.json");
 const loses = require("../fightlog/loses.json");
 const botconfig = require("../botconfig.json");
 const purple = botconfig.purple;
+const bid = botconfig.bid;
 
 module.exports.run = async (bot, message, args) => {
 
@@ -35,7 +36,7 @@ module.exports.run = async (bot, message, args) => {
   }
 
 
-  if(fMember.id === "450615706313293835"){
+  if(fMember.id === bid){
     if(!questL[message.author.id]){
       questL[message.author.id] = {
         quest: "1"
