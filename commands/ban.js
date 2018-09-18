@@ -25,7 +25,7 @@ module.exports.run = async (bot, message, args) => {
   .addField("Reason", banReason);
 
   let responseMsg = `\:exclamation: | You are banning **${mentionedMember.user.tag}** from **${message.guild.name}**\n\`\`\`Ban Reason:\n\n${banReason}\`\`\`\n \:arrow_right: Please type \`confirm\` or type \`cancel\` `;
-
+  
   let sentMessage = await message.channel.send(responseMsg);
 
   let userResponse = await getResponse(message.channel, message.author, ['confirm', 'cancel'], `\:no: | That is an invalid response. Please try again.`).catch(console.log);
@@ -36,6 +36,11 @@ module.exports.run = async (bot, message, args) => {
   } else {
       mentionedMember.ban(banReason).then( () => {
         message.channel.send(banEmbed);
+        message.channel.send(`\:exlamation: | User **${mentionedMember.user.tag}** was successfully banned from ${message.guild.name}`);
+
+        mentionedMember.user.send(`\:exclamation: | Ban Reason: \n\n\`\`\`Ban Reason:\n\n${banReason}\`\`\`\n\n*This message is an automated notification*`).catch(e =>{
+          message.channel.send(`\:exclamation: | Failed to dm user when banning!`);
+        })
       }).catch(e => {
           message.channel.send(`**Warning** | Failed to ban **${mentionedMember.user.tag}**`)
           throw new Error(e);
