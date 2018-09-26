@@ -94,7 +94,7 @@ bot.on("channelDelete", async channel => {
 
 bot.on("ready", () => {
   console.log(`Penny has started, with ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
-  bot.user.setActivity("𝕴'𝖑𝖑 𝖓𝖆𝖒𝖊 𝖙𝖍𝖎𝖘 𝖘𝖊𝖗𝖛𝖊𝖗 𝖑𝖆𝖙𝖊𝖗", {type: "WATCHING"});
+  bot.user.setActivity("𝓘𝓝𝓣𝓢𝓛", {type: "WATCHING"});
 });
 
 bot.on("message", require('./afkListener.js'));
