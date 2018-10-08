@@ -171,7 +171,7 @@ module.exports.run = async (bot, message, args) => {
     .setThumbnail(fMember.user.displayAvatarURL)
     .addField("Winner", fMember)
     .addField("Loser", message.author)
-    .addField("How it went", fightresults [fresult])
+    //.addField("How it went", fightresults [fresult])
     //.addField("Level", fLvl)
     .setImage(sub)
     .addField("XP", fXp);
@@ -241,7 +241,7 @@ module.exports.run = async (bot, message, args) => {
     //.addField("Level", sLvl)
     .addField("XP", sXp)
     .setImage(sub)
-    .addField("How it went", fightresults [fresult]);
+    //.addField("How it went", fightresults [fresult]);
     message.delete();
 
 
