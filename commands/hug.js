@@ -18,6 +18,7 @@ module.exports.run = async(bot, message, args) => {
         'https://media.giphy.com/media/LXgqjQ3eGyZrHeKUxU/giphy.gif',
         'https://media.giphy.com/media/5WeTUHkxZnCJBfImWA/giphy.gif',
         'https://media.giphy.com/media/E1gzGePqdVxrz06jvZ/giphy.gif',
+        'https://media.giphy.com/media/2zoCK1wBN3rrIa94dS/giphy.gif',
         
 
 
