@@ -9,7 +9,6 @@ module.exports.run = async(bot, message, args) => {
         'https://media1.tenor.com/images/1f281a73477489a8b53ff85c13999714/tenor.gif?itemid=5020990',
         'https://i.pinimg.com/originals/79/7f/34/797f347cc1b437839cd21b44aa6fde96.gif',
         'https://thumbs.gfycat.com/AgitatedIlliterateJaguar-size_restricted.gif',
-        'https://media.giphy.com/media/wog0MRE6zrfSypTUxm/giphy.gif',
         'https://i.gifer.com/37wL.gif',
 
 
