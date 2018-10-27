@@ -19,6 +19,12 @@ module.exports.run = async(bot, message, args) => {
         'https://media.giphy.com/media/5WeTUHkxZnCJBfImWA/giphy.gif',
         'https://media.giphy.com/media/E1gzGePqdVxrz06jvZ/giphy.gif',
         'https://media.giphy.com/media/2zoCK1wBN3rrIa94dS/giphy.gif',
+        'https://media.giphy.com/media/1RhEW3slpX8EdNHgP8/giphy.gif',
+        'https://media.giphy.com/media/EEB391fiPfK4F4mCjt/giphy.gif',
+        'https://media.giphy.com/media/7FgYibGHrG4stu7r9X/giphy.gif',
+        'https://media.giphy.com/media/LTGjmy2pByMrNA9UXS/giphy.gif',
+        'https://media.giphy.com/media/443HLwD9rBSpJybpG2/giphy.gif',
+        'https://media.giphy.com/media/1wX5TvqnLJfqPnYTgM/giphy.gif',
         
 
 
