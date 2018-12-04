@@ -5,11 +5,17 @@ module.exports.run = async(bot, message, args) => {
 
     let subreddits = [
 
-        'http://mrwgifs.com/wp-content/uploads/2014/09/Arnold-Geralds-Hankshake-In-The-Hey-Arnold-Intro-Theme-Song.gif',
-        'https://media1.tenor.com/images/1f281a73477489a8b53ff85c13999714/tenor.gif?itemid=5020990',
-        'https://i.pinimg.com/originals/79/7f/34/797f347cc1b437839cd21b44aa6fde96.gif',
-        'https://thumbs.gfycat.com/AgitatedIlliterateJaguar-size_restricted.gif',
-        'https://i.gifer.com/37wL.gif',
+        'https://gph.is/2ATApkD'
+        'https://gph.is/2QbWaqG'
+        'https://gph.is/2BRuZbL'
+        'https://gph.is/2BQ3HTe'
+        'https://gph.is/2SsqRUS'
+        'https://gph.is/2Su32fA'
+        'https://gph.is/2BQthHy'
+        'https://gph.is/2SqTdz5'
+        'https://gph.is/2QbAb2N'
+        'https://gph.is/2BQp6eP'
+        'https://gph.is/2BQnsdb'
 
 
 
