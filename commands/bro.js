@@ -5,17 +5,19 @@ module.exports.run = async(bot, message, args) => {
 
     let subreddits = [
 
-        'https://gph.is/2ATApkD',
-        'https://gph.is/2QbWaqG',
-        'https://gph.is/2BRuZbL',
-        'https://gph.is/2BQ3HTe',
-        'https://gph.is/2SsqRUS',
-        'https://gph.is/2Su32fA',
-        'https://gph.is/2BQthHy',
-        'https://gph.is/2SqTdz5',
-        'https://gph.is/2QbAb2N',
-        'https://gph.is/2BQp6eP',
-        'https://gph.is/2BQnsdb',
+        'https://media.giphy.com/media/4WFiAcreAPXNOQ9ddv/giphy.gif',
+        'https://media.giphy.com/media/5eG1Uyn2qfwMnIMDCY/giphy.gif',
+        'https://media.giphy.com/media/g07k9rfuiY3OsW9Oco/giphy.gif',
+        'https://media.giphy.com/media/6GFcTNhf1pmESeudxT/giphy.gif',
+        'https://media.giphy.com/media/2w4OaG8qIsEzGhUSPA/giphy.gif',
+        'https://media.giphy.com/media/35MCtpI5npAHSLcInn/giphy.gif',
+        'https://media.giphy.com/media/1dKQaJ444y8QxTUNaT/giphy.gif',
+        'https://media.giphy.com/media/2xE3QyuG7cFVCfxJ0s/giphy.gif',
+        'https://media.giphy.com/media/4GWh7VFJnzSB1iFy20/giphy.gif',
+        'https://media.giphy.com/media/l2adduTiUaqRn2HpQQ/giphy.gif',
+        'https://media.giphy.com/media/1na6Eu9u21hEBYPrFz/giphy.gif',
+        'https://media.giphy.com/media/5hd97nKfNNKuBtwaLp/giphy.gif',
+        'https://media.giphy.com/media/mX3P97rgjYrv6ySbqW/giphy.gif',
 
 
 
