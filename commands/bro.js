@@ -15,7 +15,7 @@ module.exports.run = async(bot, message, args) => {
         'https://gph.is/2SqTdz5'
         'https://gph.is/2QbAb2N'
         'https://gph.is/2BQp6eP'
-        'https://gph.is/2BQnsdb'
+        'https://gph.is/2BQnsdb',
 
 
 
