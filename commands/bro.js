@@ -5,16 +5,16 @@ module.exports.run = async(bot, message, args) => {
 
     let subreddits = [
 
-        'https://gph.is/2ATApkD'
-        'https://gph.is/2QbWaqG'
-        'https://gph.is/2BRuZbL'
-        'https://gph.is/2BQ3HTe'
-        'https://gph.is/2SsqRUS'
-        'https://gph.is/2Su32fA'
-        'https://gph.is/2BQthHy'
-        'https://gph.is/2SqTdz5'
-        'https://gph.is/2QbAb2N'
-        'https://gph.is/2BQp6eP'
+        'https://gph.is/2ATApkD',
+        'https://gph.is/2QbWaqG',
+        'https://gph.is/2BRuZbL',
+        'https://gph.is/2BQ3HTe',
+        'https://gph.is/2SsqRUS',
+        'https://gph.is/2Su32fA',
+        'https://gph.is/2BQthHy',
+        'https://gph.is/2SqTdz5',
+        'https://gph.is/2QbAb2N',
+        'https://gph.is/2BQp6eP',
         'https://gph.is/2BQnsdb',
 
 
