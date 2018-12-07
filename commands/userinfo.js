@@ -2,18 +2,20 @@ const Discord = require("discord.js");
 
 module.exports.run = async (bot, message, args) => {
 
-let user = message.mentions.members.first() || message.guild.member(args[0]);
+let memberInfo = message.mentions.members.first(); || message.guild.member(args[0]);
   
   
 
   var userinfo = new Discord.RichEmbed()
-  .setAuthor(`${user.username}`)
-  .setThumbnail(user.avatarURL)
+  
+  .setAuthor(memberInfo.displayName)
+  .setThumbnail(memberInfo.user.avatarURL)
   .setDescription("This is the user's info!")
-  .setColor("#bc0000")
-  .addField("Full Username:", `${user.username}#${user.discriminator}`)
-  .addField("ID:", user.id)
-  .addField("Created At:", user.createdAt)
+  .setColor("#15f153")
+  .addField("Full Username:", `${memberInfo.user.username}#${memberInfo.user.discriminator}`)
+  .addField("ID:", memberInfo.id)
+  .addField("Created At:", memberInfo.user.createdAt)
+  .addField("Joined at:", memberInfo.user.joinedAt);
 
    message.channel.send(userinfo);
 };
