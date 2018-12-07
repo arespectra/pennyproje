@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 
 module.exports.run = async (bot, message, args) => {
 
-let memberInfo = message.mentions.members.first(); || message.guild.member(args[0]);
+let memberInfo = message.mentions.members.first() || message.guild.member(args[0]);
   
   
 
