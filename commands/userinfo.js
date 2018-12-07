@@ -15,7 +15,7 @@ let memberInfo = message.mentions.members.first() || message.guild.member(args[0
   .addField("Full Username:", `${memberInfo.user.username}#${memberInfo.user.discriminator}`)
   .addField("ID:", memberInfo.id)
   .addField("Created At:", memberInfo.user.createdAt)
-  .addField("Joined at:", memberInfo.user.joinedAt);
+  .addField("Joined at:", memberInfo.member.joinedAt);
 
    message.channel.send(userinfo);
 };
