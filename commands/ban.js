@@ -10,7 +10,7 @@ module.exports.run = async (bot, message, args) => {
   }
 
   let mentionedMember = message.mentions.members.first() || message.guild.member(args[0]);
-  if(!mentionedMember || mentionedMember == null) return message.channel.send("Please mention a user or provide their user id!");
+  if(!mentionedMember || mentionedMember == null) return message.channel.send("Please mention a user or provide the user's id!");
   let banReason = args.slice(1).join(" ") != '' ? args.slice(1).join(" ") : 'No reason provided';
   if(!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send("Aww sorry but you are not cool enough to do this");
   if(mentionedMember.hasPermission("MANAGE_MESSAGES") || !mentionedMember.bannable) return message.channel.send("That person can't be banned bro!");

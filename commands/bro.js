@@ -5,11 +5,17 @@ module.exports.run = async(bot, message, args) => {
 
     let subreddits = [
 
-        'http://mrwgifs.com/wp-content/uploads/2014/09/Arnold-Geralds-Hankshake-In-The-Hey-Arnold-Intro-Theme-Song.gif',
-        'https://media1.tenor.com/images/1f281a73477489a8b53ff85c13999714/tenor.gif?itemid=5020990',
-        'https://i.gifer.com/37wL.gif',
-        'https://i.pinimg.com/originals/79/7f/34/797f347cc1b437839cd21b44aa6fde96.gif',
-        'https://thumbs.gfycat.com/AgitatedIlliterateJaguar-size_restricted.gif',
+        'https://media.giphy.com/media/4WFiAcreAPXNOQ9ddv/giphy.gif',
+        'https://media.giphy.com/media/5eG1Uyn2qfwMnIMDCY/giphy.gif',
+        'https://media.giphy.com/media/g07k9rfuiY3OsW9Oco/giphy.gif',
+        'https://media.giphy.com/media/2w4OaG8qIsEzGhUSPA/giphy.gif',
+        'https://media.giphy.com/media/1dKQaJ444y8QxTUNaT/giphy.gif',
+        'https://media.giphy.com/media/2xE3QyuG7cFVCfxJ0s/giphy.gif',
+        'https://media.giphy.com/media/4GWh7VFJnzSB1iFy20/giphy.gif',
+        'https://media.giphy.com/media/1na6Eu9u21hEBYPrFz/giphy.gif',
+        'https://media.giphy.com/media/5hd97nKfNNKuBtwaLp/giphy.gif',
+        'https://media.giphy.com/media/mX3P97rgjYrv6ySbqW/giphy.gif',
+        'https://media.giphy.com/media/MuE9M1pTuMx1cnEHBx/giphy.gif',
 
 
 

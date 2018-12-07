@@ -11,7 +11,36 @@ const purple = botconfig.purple;
 const bid = botconfig.bid;
 
 module.exports.run = async (bot, message, args) => {
+  
+  
+  let subreddits = [
 
+        'https://media.giphy.com/media/iWAqMe8hBWKVq/giphy-downsized-large.gif',
+        'https://media.tenor.com/images/b561ad7377142adf365fe33f20fa45e8/tenor.gif',
+        'https://media.giphy.com/media/LdsJrFnANh6HS/giphy.gif',
+        'https://media.giphy.com/media/12dO0uYqeMVOy4/giphy.gif',
+        'https://media.giphy.com/media/vtuUxg1qBgG6k/giphy.gif',
+        'https://media.giphy.com/media/6CJT5B0JwxCY8/giphy.gif',
+        'https://media.giphy.com/media/11HeubLHnQJSAU/giphy.gif',
+        'https://media.giphy.com/media/1mpAmSVQNOzxS/giphy.gif',
+        'https://media.giphy.com/media/jfSb9mx1EpCiQ/giphy.gif',
+        'https://media.giphy.com/media/sRLx1DequmLug/giphy.gif',
+        'https://media.giphy.com/media/fseRXWw5ScmxsEOwlM/giphy.gif',
+        'https://media.giphy.com/media/jyMyHFzuHYv96/giphy.gif',
+        'https://media.giphy.com/media/xUNemWOzznJDZpRDZm/giphy.gif',
+        'https://media.giphy.com/media/TpAtVLFuHpOq4/giphy.gif',
+        'https://media.giphy.com/media/BpX6RB6YFcx7q/giphy.gif',
+        'https://media.giphy.com/media/Zg2mOtKNF7wu4/giphy.gif',
+        'https://media.giphy.com/media/1oIMdfZ1GpT77MtjHZ/giphy.gif',
+
+
+
+
+
+
+        ]
+  
+  let sub = subreddits[Math.round(Math.random() * (subreddits.length - 1))];
   let fMember = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
   if(!fMember) return message.reply("oof").then(msg => {msg.delete(5000)});
   if(fMember.id === message.author.id) return message.reply("Quit hitting yourself, stupid!");
@@ -141,8 +170,9 @@ module.exports.run = async (bot, message, args) => {
     .setThumbnail(fMember.user.displayAvatarURL)
     .addField("Winner", fMember)
     .addField("Loser", message.author)
-    .addField("How it went", fightresults [fresult])
+    //.addField("How it went", fightresults [fresult])
     //.addField("Level", fLvl)
+    .setImage(sub)
     .addField("XP", fXp);
 
     strength[fMember.id].xp = fXp + chance;
@@ -209,7 +239,8 @@ module.exports.run = async (bot, message, args) => {
     .addField("Loser", fMember)
     //.addField("Level", sLvl)
     .addField("XP", sXp)
-    .addField("How it went", fightresults [fresult]);
+    .setImage(sub)
+    //.addField("How it went", fightresults [fresult]);
     message.delete();
 
 
