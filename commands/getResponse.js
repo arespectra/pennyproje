@@ -15,6 +15,7 @@ module.exports = async function getResponse (channel, user, validResponses, inco
             if (isValidResponse == false) return repeat(channel, user, validResponses, incorrectResponseMessage);
             resolve(message.content.toLowerCase());
         }).catch(e=>{
+            channel.send(`\:no: | **${user.username}**, the command menu has closed due to inactivity.`);
             reject();
         });
     })

@@ -19,17 +19,24 @@ module.exports.run = async (bot, message, args) => {
   .addField("Reason", kickReason);
 
   let responseMsg = `\:exclamation: | You are kicking **${mentionedMember.user.tag}** from **${message.guild.name}**\n\`\`\`Kick Reason:\n\n${kickReason}\`\`\`\n \:arrow_right: Please type \`confirm\` or type \`cancel\` `;
-
+  
   let sentMessage = await message.channel.send(responseMsg);
 
   let userResponse = await getResponse(message.channel, message.author, ['confirm', 'cancel'], `\:no: | That is an invalid response. Please try again.`).catch(console.log);
   console.log(userResponse);
   sentMessage.delete();
-  if (!userResponse | userResponse == 'cancel') {
+  if (!userResponse) return;
+  if (userResponse == 'cancel') {
       message.channel.send(`\:information_source: | **${mentionedMember.user.tag}** was not kicked!`)
   } else {
       mentionedMember.kick(kickReason).then( () => {
         message.channel.send(kickEmbed);
+        
+        message.channel.send(`\:exlamation: | User **${mentionedMember.user.tag}** was successfully kicked from ${message.guild.name}`);
+
+        mentionedMember.user.send(`\:exclamation: | Kick Reason: \n\n\`\`\`Kick Reason:\n\n${kickReason}\`\`\`\n\n*This message is an automated notification*`).catch(e =>{
+          message.channel.send(`\:exclamation: | Failed to dm user when kicking!`);
+        })
       }).catch(e => {
           message.channel.send(`**Warning** | Failed to kick **${mentionedMember.user.tag}**`)
           throw new Error(e);
