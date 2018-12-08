@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const moment = require("moment");
 
 module.exports.run = async (bot, message, args) => {
 
@@ -15,8 +16,8 @@ let memberInfo = message.mentions.members.first() || message.guild.member(args[0
   .addField("Full Username:", `${memberInfo.user.username}#${memberInfo.user.discriminator}`)
   .addField("Bot:", `${memberInfo.user.bot}`, true)
   .addField("ID:", memberInfo.id)
-  .addField("Created At:", memberInfo.user.createdAt)
-  .addField("Joined at:", memberInfo.joinedAt);
+  .addField("Created At:",  `${moment.utc(memberInfo.user.createdAt).format("dddd, MMMM Do YYYY, HH:mm:ss")}`, true)
+  .addField("Joined at:", `${moment.utc(memberInfo.joinedAt).format("dddd, MMMM Do YYYY, HH:mm:ss")}`, true);
 
    message.channel.send(userinfo);
 };
