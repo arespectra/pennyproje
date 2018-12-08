@@ -13,6 +13,7 @@ let memberInfo = message.mentions.members.first() || message.guild.member(args[0
   .setDescription("This is the user's info!")
   .setColor("#15f153")
   .addField("Full Username:", `${memberInfo.user.username}#${memberInfo.user.discriminator}`)
+  .addField("Bot:", `${user.bot}`, true)
   .addField("ID:", memberInfo.id)
   .addField("Created At:", memberInfo.user.createdAt)
   .addField("Joined at:", memberInfo.joinedAt);
