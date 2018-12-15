@@ -6,7 +6,7 @@ module.exports.run = async (bot, message, args) => {
   //if(command === "remindme") {
     let reminderTime = args[0];
 
-      if(!reminderTime) return message.channel.send(`**Specify a time for me to remind you. Usage: \>remind 15min | Code**\);
+      if(!reminderTime) return message.channel.send(`**Specify a time for me to remind you. Usage: \`>remind 15min | Code**\``);
 
       let reminder = args.slice(1).join(" ");
 
