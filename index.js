@@ -14,6 +14,7 @@ let cooldown = new Set();
 let cdseconds = 5;
 const chratis_cooldown_time = 5;
 
+
 sqlite.open(path.join(__dirname, 'settings.sqlite3')).then(db => {
 	db.migrate().then(db => bot.database = db);
 });
@@ -54,38 +55,38 @@ fs.readdir("./commands/", (err, files) =>  {
 //});
 //${member} has left the server!
 
-bot.on("roleUpdate", async (oldRole, newRole)=> {
+//bot.on("roleUpdate", async (oldRole, newRole)=> {
 
-  let logchannel = newRole.guild.channels.find(`name`, "log");
-  logchannel.send(`The role ${oldRole.name} has been changed to ${newRole}`);
-
-
-});
-
-bot.on("roleDelete", async role => {
-  let logchannel = message.guild.channels.find(`name`, "smalltalk");
-  logchannel.send(`The role ${role.name} has been deleted.`);
-});
+  //let logchannel = newRole.guild.channels.find(`name`, "log");
+  //logchannel.send(`The role ${oldRole.name} has been changed to ${newRole}`);
 
 
+//});
+
+//bot.on("roleDelete", async role => {
+  //let logchannel = message.guild.channels.find(`name`, "smalltalk");
+  //logchannel.send(`The role ${role.name} has been deleted.`);
+//});
 
 
-bot.on("channelCreate", async channel => {
 
-  console.log(`${channel.name} has been created.`);
 
-  let sChannel = channel.guild.channels.find(`name`, "smalltalk");
-  sChannel.send(`${channel} has been created`);
+//bot.on("channelCreate", async channel => {
 
-});
+  //console.log(`${channel.name} has been created.`);
 
-bot.on("channelDelete", async channel => {
+  //let sChannel = channel.guild.channels.find(`name`, "smalltalk");
+  //sChannel.send(`${channel} has been created`);
 
-  console.log(`${channel.name} has been deleted.`);
+//});
 
-  let sChannel = channel.guild.channels.find(`name`, "smalltalk");
-  sChannel.send(`${channel.name} has been deleted`);
-});
+//bot.on("channelDelete", async channel => {
+
+  //console.log(`${channel.name} has been deleted.`);
+
+  //let sChannel = channel.guild.channels.find(`name`, "smalltalk");
+  //sChannel.send(`${channel.name} has been deleted`);
+//});
 
 
 
