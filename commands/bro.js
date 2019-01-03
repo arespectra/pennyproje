@@ -8,7 +8,6 @@ module.exports.run = async(bot, message, args) => {
         'https://media.giphy.com/media/4WFiAcreAPXNOQ9ddv/giphy.gif',
         'https://media.giphy.com/media/5eG1Uyn2qfwMnIMDCY/giphy.gif',
         'https://media.giphy.com/media/g07k9rfuiY3OsW9Oco/giphy.gif',
-        'https://media.giphy.com/media/2w4OaG8qIsEzGhUSPA/giphy.gif',
         'https://media.giphy.com/media/1dKQaJ444y8QxTUNaT/giphy.gif',
         'https://media.giphy.com/media/2xE3QyuG7cFVCfxJ0s/giphy.gif',
         'https://media.giphy.com/media/4GWh7VFJnzSB1iFy20/giphy.gif',
