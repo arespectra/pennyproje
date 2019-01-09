@@ -4,6 +4,7 @@ const ms = require("ms");
 module.exports.run = async (bot, message, args) => {
     const NO_TIME_SPECIFIED = `**Specify a time for me to remind you! Usage: \`>remind 15min | Code**\``
     const NO_OPERABLE_TIME = `Sorry! You have to specify the time before the text!`;
+    const DEFAULT_REMINDER_TEXT = `Here's your reminder!`;
     
     const fullReminder = args
           .join(" ")
@@ -16,7 +17,7 @@ module.exports.run = async (bot, message, args) => {
     if (!reminderTime.length) return message.channel.send(NO_TIME_SPECIFIED);
     if (!/\d+/.test || !convertedReminderTime) return message.channel.send(NO_OPERABLE_TIME);
     
-    const reminderText = fullReminder[1];
+    const reminderText = fullReminder[1] || DEFAULT_REMINDER_TEXT;
     let remindEmbed = new Discord.RichEmbed()
         .setColor("#15f153")
         .addField("Reminder", `${reminderText}`)
