@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const ms = require("ms");
 
 module.exports.run = async (bot, message, args) => {
-    const INVALID_SYNTAX = `**Specify a time for me to remind you! Usage: \`>remind 15min | Code**\``
+    const INVALID_SYNTAX = `**Specify a time for me to remind you! Usage: \`>remindme 15min | Code**\``
     const NO_USER_PROVIDED = `Sorry! That user isn't part of the server anymore!`;
     const NO_OPERABLE_TIME = `Sorry! You have to specify the time before the text!`;
     const DEFAULT_REMINDER_TEXT = `Here's your reminder!`;
