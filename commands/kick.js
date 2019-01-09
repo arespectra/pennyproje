@@ -3,47 +3,70 @@ const Discord = require("discord.js");
 const getResponse = require('./getResponse');
 
 module.exports.run = async (bot, message, args) => {
+    if (args[0] === 'help') {
+        message.reply('Usage: p>kick <user> <reason>');
+        return;
+    }
 
-  let mentionedMember = message.mentions.members.first() || message.guild.member(args[0]);
-  if(!mentionedMember || mentionedMember == null) return message.channel.send("Please mention a user or provide their user id!");
-  let kickReason = args.slice(1).join(" ") != '' ? args.slice(1).join(" ") : 'No reason provided';
-  if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send("Aww sorry but you are not cool enough to do this");
-  if(mentionedMember.hasPermission("MANAGE_MESSAGES") || !mentionedMember.kickable) return message.channel.send("That person can't be kicked bro!");
+    const { mentions, guild, member, channel, author, createdAt } = message;
 
-  let kickEmbed = new Discord.RichEmbed()
-  .setDescription("~Kick~")
-  .setColor("#e56b00")
-  .addField("Kicked User", `${mentionedMember} with ID ${mentionedMember.id}`)
-  .addField("Kicked By", `<@${message.author.id}> with ID ${message.author.id}`)
-  .addField("Kicked In", message.channel)
-  .addField("Reason", kickReason);
+    const NO_USER_PROVIDED = `Please mention a user or provide the user's id!`;
+    const NO_REASON_PROVIDED = `No reason provided.`;
+    const NO_KICK_PERMISSIONS = `Aww, sorry! You're not cool enough to do that!`;
+    const UNKICKABLE_PERSON = `That person cannot be kicked, dude!`
+    const INVALID_CONFIRMATION = `\:no: | That is an invalid response. Please try again.`
+    const FAILED_DM = `\:exclamation: | Failed to DM user after kicking!`;
 
-  let responseMsg = `\:exclamation: | You are kicking **${mentionedMember.user.tag}** from **${message.guild.name}**\n\`\`\`Kick Reason:\n\n${kickReason}\`\`\`\n \:arrow_right: Please type \`confirm\` or type \`cancel\` `;
-  
-  let sentMessage = await message.channel.send(responseMsg);
+    const mentionedMember = mentions.members.first() || guild.member(args[0]);
+    if (!mentionedMember)
+        return channel.send(NO_USER_PROVIDED);
 
-  let userResponse = await getResponse(message.channel, message.author, ['confirm', 'cancel'], `\:no: | That is an invalid response. Please try again.`).catch(console.log);
-  console.log(userResponse);
-  sentMessage.delete();
-  if (!userResponse) return;
-  if (userResponse == 'cancel') {
-      message.channel.send(`\:information_source: | **${mentionedMember.user.tag}** was not kicked!`)
-  } else {
-      mentionedMember.kick(kickReason).then( () => {
-        message.channel.send(kickEmbed);
-        
-        message.channel.send(`\:exlamation: | User **${mentionedMember.user.tag}** was successfully kicked from ${message.guild.name}`);
+    let kickReason = args.slice(1).join(" ").trim();
+    if (!kickReason.length) kickReason = NO_REASON_PROVIDED;
 
-        mentionedMember.user.send(`\:exclamation: | Kick Reason: \n\n\`\`\`Kick Reason:\n\n${kickReason}\`\`\`\n\n*This message is an automated notification*`).catch(e =>{
-          message.channel.send(`\:exclamation: | Failed to dm user when kicking!`);
-        })
-      }).catch(e => {
-          message.channel.send(`**Warning** | Failed to kick **${mentionedMember.user.tag}**`)
-          throw new Error(e);
-      })
-  }
+    if (!member.hasPermission("KICK_MEMBERS"))
+        return channel.send(NO_KICK_PERMISSIONS);
+    if (mentionedMember.hasPermission("MANAGE_MESSAGES") || !mentionedMember.kickable)
+        return channel.send(UNKICKABLE_PERSON);
+    
+    const kickEmbed = new Discord.RichEmbed()
+          .setDescription("~Kick~")
+          .setColor("#e56b00")
+          .addField("Kicked User", `${mentionedMember} with ID ${mentionedMember.id}`)
+          .addField("Kicked By", `<@${author.id}> with ID ${author.id}`)
+          .addField("Kicked In", channel)
+          .addField("Time", createdAt)
+          .addField("Reason", kickReason);
+
+    let confirmationReceipt = `\:exclamation: | You are kicking **${mentionedMember.user.tag}** from **${message.guild.name}**\n\`\`\`Kick Reason:\n\n${kickReason}\`\`\`\n \:arrow_right: Please type \`confirm\` or type \`cancel\` `;
+    let sentMessage = await channel.send(responseMsg);
+    const userResponse = await getResponse(channel, author, ['confirm', 'cancel'], INVALID_CONFIRMATION).catch(console.log);
+    
+    console.log(userResponse);
+    sentMessage.delete();
+
+    if (!userResponse || userResponse === 'cancel') {
+        channel.send(`\:information_source: **${mentionedMember.user.tag}** was not kicked!`)
+    } else {
+        mentionedMember.user
+            .send(`\:exclamation: | Kick Reason: \n\n\`\`\`Kick Reason:\n\n${kickReason}\`\`\`\n\n*This message is an automated notification*`)
+            .then(_ => {
+                mentionedMember
+                    .kick(kickReason)
+                    .then(_ => {
+                        channel.send(kickEmbed);
+                        channel.send(`\:exclamation: User **${mentionedMember.user.tag}** was successfully kicked from ${message.guild.name}`);
+                    }, kickError => {
+                        message.channel.send(`**Warning** Failed to kick **${mentionedMember.user.tag}**`)
+                        throw new Error(kickError);
+                    })                
+            }, dmError => {
+                message.channel.send(FAILED_DM);
+                throw new Error(dmError);
+            });
+    }
 }
 
 exports.help = {
-  name:"kick"
+    name: 'kick'
 }
