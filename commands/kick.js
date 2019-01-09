@@ -49,7 +49,7 @@ module.exports.run = async (bot, message, args) => {
         channel.send(`\:information_source: **${mentionedMember.user.tag}** was not kicked!`)
     } else {
         mentionedMember.user
-            .send(`\:exclamation: | Kick Reason: \n\n\`\`\`Kick Reason:\n\n${kickReason}\`\`\`\n\n*This message is an automated notification*`)
+            .send(`\:exclamation: You were kicked from our server. \n\n\`\`\`Reason:\n\n${kickReason}\`\`\`\n\n*This message is an automated notification.*`)
             .then(_ => {
                 mentionedMember
                     .kick(kickReason)

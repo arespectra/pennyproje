@@ -49,7 +49,7 @@ module.exports.run = async (bot, message, args) => {
         channel.send(`\:information_source: **${mentionedMember.user.tag}** was not banned!`)
     } else {
         mentionedMember.user
-            .send(`\:exclamation: You were banned from a server. \n\n\`\`\`Reason:\n\n${banReason}\`\`\`\n\n*This message is an automated notification.*`)
+            .send(`\:exclamation: You were banned from our server. \n\n\`\`\`Reason:\n\n${banReason}\`\`\`\n\n*This message is an automated notification.*`)
             .then(_ => {
                 mentionedMember
                     .ban(banReason)
