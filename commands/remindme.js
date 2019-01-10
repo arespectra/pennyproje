@@ -5,7 +5,9 @@ module.exports.run = async (bot, message, args) => {
     const INVALID_SYNTAX = `**Specify a time for me to remind you! Usage: \`>remindme 15min | Code**\``
     const NO_USER_PROVIDED = `Sorry! That user isn't part of the server anymore!`;
     const NO_OPERABLE_TIME = `Sorry! You have to specify the time before the text!`;
+
     const DEFAULT_REMINDER_TEXT = `Here's your reminder!`;
+    const DEFAULT_REMINDER_TIME = '10s';
     
     const fullReminder = args
           .join(" ")
@@ -19,22 +21,35 @@ module.exports.run = async (bot, message, args) => {
 
     const reminderCreator = [message.author.id];
     if (!reminderCreator[0]) return message.channel.send(NO_USER_PROVIDED);
-    if (!fullReminder[0].length) return message.channel.send(INVALID_SYNTAX);
+    if (!fullReminder[0].length) fullReminder[0] = DEFAULT_REMINDER_TIME;
     
-    const reminderTime = fullReminder[0];
+    let reminderTime = fullReminder[0];
     const reminderText = fullReminder[1] || DEFAULT_REMINDER_TEXT;
-    const convertedReminderTime = ms(reminderTime);
+    let convertedReminderTime = ms(reminderTime);
+    if (!convertedReminderTime) {
+        let hours, minutes;
+        const reminderFragment = reminderTime.split(/h/i);
+        hours = Number(reminderFragment[0].trim());
+        minutes = Number(reminderFragment[1].split(/m/i)[0].trim());
+        if (!hours || !minutes) return message.channel.send(NO_OPERABLE_TIME);
+        minutes += hours * 60;
+        reminderTime = `${minutes}m`;
+        console.log(`Hour+Minute format provided. Will attempt to remind in ${minutes} minutes.`);
+        convertedReminderTime = ms(reminderTime);
+    }
 
-    console.log(fullReminder);
-    
-    if (!/\d+/.test(reminderTime) || !convertedReminderTime) return message.channel.send(NO_OPERABLE_TIME);
+    if (!/\d+/.test(reminderTime) || !convertedReminderTime)
+        return message.channel.send(NO_OPERABLE_TIME);
     
     let remindEmbed = new Discord.RichEmbed()
         .setColor("#15f153")
         .addField("Reminder", `${reminderText}`)
         .addField("Time", `\`${reminderTime}\``);
 
-    const memberIdsToPing = reminderCreator.concat(message.mentions.members.map(member => member.id));
+    const memberIdsToPing = reminderCreator
+          .concat(message.mentions.members.map(member => member.id))
+          .concat(message.mentions.roles.map(role => `&${role.id}`));
+    
     message.channel.send(remindEmbed);
 
     const buildMessage = reminderText => {
@@ -43,7 +58,6 @@ module.exports.run = async (bot, message, args) => {
         const membersToPing = memberIdsToPing.map(memberId => `<@${memberId}>`).join(' ');
         return `${membersToPing} ${baseMessage}${messageBookend}`;
     };
-    
 
     setTimeout(_ => {
         return message.channel.send(buildMessage(reminderText));
