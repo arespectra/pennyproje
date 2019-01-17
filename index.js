@@ -43,7 +43,7 @@ bot.on("guildMemberAdd", async member => {
 
   let welcomechannel = member.guild.channels.find(`name`, "smalltalk-💬");
   welcomechannel.send(`**Salutations** ${member} **! Welcome to I'll name this server later Make sure to read the** <#417055055355576330>  **and give us an** <#451991249193533441> **!
-You can also get** <#470308628725760000> <a:INTSL_Penny_Polendina_dance:484319534778417172>  https://gph.is/2QmZtYu`);
+You can also get** <#470308628725760000> <a:INTSLPennySalutations:535507041003896841>  https://gph.is/2QmZtYu`);
 });
 
 //bot.on("guildMemberRemove", async member => {
