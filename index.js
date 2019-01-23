@@ -41,7 +41,7 @@ fs.readdir("./commands/", (err, files) =>  {
 bot.on("guildMemberAdd", async member => {
   console.log(`${member.id} joined the server.`);
 
-  let welcomechannel = member.guild.channels.find(`name`, "smalltalk-💬");
+  let welcomechannel = member.guild.channels.find(`name`, "smalltalk💬");
   welcomechannel.send(`**Salutations** ${member} ** <a:INTSLPennySalutations:535507041003896841> ! Welcome to I'll name this server later. Make sure to read the** <#417055055355576330> **and give us an** <#451991249193533441> **!
 You can also get** <#470308628725760000> https://gph.is/2QmZtYu`);
 });
