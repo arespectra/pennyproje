@@ -42,7 +42,7 @@ bot.on("guildMemberAdd", async member => {
   console.log(`${member.id} joined the server.`);
 
   let welcomechannel = member.guild.channels.find(`name`, "smalltalk💬");
-  welcomechannel.send(`**Salutations** ${member} ** <a:intslPennySalutations:539464904516698127> ! Welcome to I'll name this server later. Make sure to read the** <#417055055355576330> **and give us an** <#451991249193533441> **!
+  welcomechannel.send(`**Salutations** ${member} ** <a:intslPennyWaving:554045967511584778> ! Welcome to I'll name this server later. Make sure to read the** <#417055055355576330> **and give us an** <#451991249193533441> **!
 You can also get** <#521378227130859562> **as well as** <#470308628725760000> https://gph.is/2QmZtYu`);
 });
 
