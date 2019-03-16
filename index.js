@@ -43,7 +43,7 @@ bot.on("guildMemberAdd", async member => {
 
   let welcomechannel = member.guild.channels.find(`name`, "smalltalk💬");
   welcomechannel.send(`**Salutations** ${member} ** <a:intslPennyWaving:554045967511584778> ! Welcome to I'll name this server later. Make sure to read the** <#417055055355576330> **and give us an** <#451991249193533441> **!
-You can also get** <#521378227130859562> **as well as** <#470308628725760000> https://imgur.com/y8fMmu7`);
+You can also get** <#521378227130859562> **as well as** <#470308628725760000> https://cdn.discordapp.com/attachments/536516594839584768/556264453042077716/pennywave2.gif`);
 });
 
 //bot.on("guildMemberRemove", async member => {
