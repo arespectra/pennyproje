@@ -8,7 +8,7 @@ module.exports.run = async (bot, message, args) => {
 
     const DEFAULT_REMINDER_TEXT = `Here's your reminder!`;
     const DEFAULT_REMINDER_TIME = '10s';
-    
+
     const fullReminder = args
           .join(" ")
           .split("|")
@@ -22,7 +22,7 @@ module.exports.run = async (bot, message, args) => {
     const reminderCreator = [message.author.id];
     if (!reminderCreator[0]) return message.channel.send(NO_USER_PROVIDED);
     if (!fullReminder[0].length) fullReminder[0] = DEFAULT_REMINDER_TIME;
-    
+
     let reminderTime = fullReminder[0];
     const reminderText = fullReminder[1] || DEFAULT_REMINDER_TEXT;
     let convertedReminderTime = ms(reminderTime);
@@ -40,7 +40,7 @@ module.exports.run = async (bot, message, args) => {
 
     if (!/\d+/.test(reminderTime) || !convertedReminderTime)
         return message.channel.send(NO_OPERABLE_TIME);
-    
+
     let remindEmbed = new Discord.RichEmbed()
         .setColor("#15f153")
         .addField("Reminder", `${reminderText}`)
@@ -49,7 +49,7 @@ module.exports.run = async (bot, message, args) => {
     const memberIdsToPing = reminderCreator
           .concat(message.mentions.members.map(member => member.id))
           .concat(message.mentions.roles.map(role => `&${role.id}`));
-    
+
     message.channel.send(remindEmbed);
 
     const buildMessage = reminderText => {
