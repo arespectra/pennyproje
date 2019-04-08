@@ -30,7 +30,7 @@ module.exports.run = async (bot, message, args) => {
     if (!fullReminder[0].length) fullReminder[0] = DEFAULT_REMINDER_TIME;
 
     let reminderTime = fullReminder[0];
-    const reminderText = fullReminder.slice(1) || DEFAULT_REMINDER_TEXT;
+    const reminderText = fullReminder[1] || DEFAULT_REMINDER_TEXT;
     let convertedReminderTime = ms(reminderTime);
     if (!convertedReminderTime) {
         let hours, minutes;
