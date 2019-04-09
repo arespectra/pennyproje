@@ -10,18 +10,13 @@ module.exports.run = async (bot, message, args) => {
     const DEFAULT_REMINDER_TIME = '10s';
 
     const fullReminder = args
-          .map(_stringFragment => {
-              let stringFragment = _stringFragment.replace(/<@>/,'');
-              if (/^[0-9]+$/.test(stringFragment)) {
-                  mentions.push(stringFragment);
-                  return null;
-              }
-              return stringFragment.trim();
-          })
-          .filter(stringFragment => stringFragment)
+          .map(stringFragment => stringFragment.trim())
           .reduce((_fullReminder, stringFragment, index) => {
-              if (!index) _fullReminder[0] = stringFragment;
-              _fullReminder[1] = (_fullReminder[1] || '') + stringFragment;
+              if (!index) {
+                  _fullReminder[0] = stringFragment;
+              } else {
+                  _fullReminder[1] = (_fullReminder[1] || '') + stringFragment.replace(/<[@&]\w+>/g, '');
+              }
               return _fullReminder;
           }, []);
 
