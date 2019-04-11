@@ -22,7 +22,7 @@ module.exports.run = async (bot, message, args) => {
 
     const reminderCreator = [message.author.id];
     if (!reminderCreator[0]) return message.channel.send(NO_USER_PROVIDED);
-    if (!fullReminder[0] || fullReminder[0].length) fullReminder[0] = DEFAULT_REMINDER_TIME;
+    if (!fullReminder[0] || !fullReminder[0].length) fullReminder[0] = DEFAULT_REMINDER_TIME;
 
     let reminderTime = fullReminder[0];
     const reminderText = fullReminder[1] || DEFAULT_REMINDER_TEXT;
