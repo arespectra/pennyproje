@@ -9,20 +9,20 @@ module.exports.run = async (bot, message, args) => {
     const DEFAULT_REMINDER_TEXT = `Here's your reminder!`;
     const DEFAULT_REMINDER_TIME = '10s';
 
-    const fullReminder = args
+    const fullReminder = (args || [])
           .map(stringFragment => stringFragment.trim())
           .reduce((_fullReminder, stringFragment, index) => {
               if (!index) {
                   _fullReminder[0] = stringFragment;
               } else {
-                  _fullReminder[1] = (_fullReminder[1] || '') + stringFragment.replace(/<[@&]\w+>/g, '');
+                  _fullReminder[1] = (_fullReminder[1] || '') + stringFragment.replace(/<[@&]\w+>/g, '') + ' ';
               }
               return _fullReminder;
           }, []);
 
     const reminderCreator = [message.author.id];
     if (!reminderCreator[0]) return message.channel.send(NO_USER_PROVIDED);
-    if (!fullReminder[0].length) fullReminder[0] = DEFAULT_REMINDER_TIME;
+    if (!fullReminder[0] || !fullReminder[0].length) fullReminder[0] = DEFAULT_REMINDER_TIME;
 
     let reminderTime = fullReminder[0];
     const reminderText = fullReminder[1] || DEFAULT_REMINDER_TEXT;
