@@ -9,7 +9,7 @@ module.exports.run = async (bot, message, args) => {
     const DEFAULT_REMINDER_TEXT = `Here's your reminder!`;
     const DEFAULT_REMINDER_TIME = '10s';
 
-    const fullReminder = args
+    const fullReminder = (args || [])
           .map(stringFragment => stringFragment.trim())
           .reduce((_fullReminder, stringFragment, index) => {
               if (!index) {
