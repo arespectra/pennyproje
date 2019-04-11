@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const ms = require("ms");
 
 module.exports.run = async (bot, message, args) => {
-    const INVALID_SYNTAX = `**Specify a time for me to remind you! Usage: \`>remindme 15min | Code**\``
+    const INVALID_SYNTAX = `**Specify a time for me to remind you! Usage: \`>remindme 15m <mentions> <reminder>**\``
     const NO_USER_PROVIDED = `Sorry! That user isn't part of the server anymore!`;
     const NO_OPERABLE_TIME = `Sorry! You have to specify the time before the text!`;
 
@@ -10,14 +10,15 @@ module.exports.run = async (bot, message, args) => {
     const DEFAULT_REMINDER_TIME = '10s';
 
     const fullReminder = args
-          .join(" ")
-          .split("|")
-          .map(stringFragment => {
-              let _stringFragment = stringFragment.replace('<','');
-              const foundMention = _stringFragment.indexOf("@");
-              if (foundMention > -1) _stringFragment = _stringFragment.substring(0, foundMention);
-              return _stringFragment.trim();
-          });
+          .map(stringFragment => stringFragment.trim())
+          .reduce((_fullReminder, stringFragment, index) => {
+              if (!index) {
+                  _fullReminder[0] = stringFragment;
+              } else {
+                  _fullReminder[1] = (_fullReminder[1] || '') + stringFragment.replace(/<[@&]\w+>/g, '');
+              }
+              return _fullReminder;
+          }, []);
 
     const reminderCreator = [message.author.id];
     if (!reminderCreator[0]) return message.channel.send(NO_USER_PROVIDED);
@@ -59,9 +60,7 @@ module.exports.run = async (bot, message, args) => {
         return `${membersToPing} ${baseMessage}${messageBookend}`;
     };
 
-    setTimeout(_ => {
-        return message.channel.send(buildMessage(reminderText));
-    }, convertedReminderTime);
+    setTimeout(_ => message.channel.send(buildMessage(reminderText)), convertedReminderTime);
 };
 
 module.exports.help = {
