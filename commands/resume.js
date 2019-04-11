@@ -7,6 +7,8 @@ exports.run = (client, message, args, ops) => {
 
   if (!fetched.dispatcher.paused) return message.channel.send('The music isn\'t in pause!');
 
+  client.user.setActivity(`${data.queue[0].songTitle}`, {type: "LISTENING"});
+
   fetched.dispatcher.resume();
 
   message.channel.send(`Music resumed: ${fetched.queue[0].songTitle}`);
