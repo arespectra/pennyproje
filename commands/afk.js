@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const { RichEmbed } = require("discord.js");	
+const { RichEmbed } = require("discord.js");
 const { remove, insertOrReplace } = require('../databaseHandler.js');
 
 module.exports.run = async (bot, message, args) => {

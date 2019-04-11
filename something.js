@@ -3,15 +3,12 @@ const Discord = require("discord.js");
 const fs = require("fs");
 const bot = new Discord.Client({disableEveryone: true});
 const path = require('path');
-const Discord = require("discord.js");
-const fs = require("fs");
-const botconfig = require('./botconfig.json');
-const bot = new Discord.Client({disableEveryone: true});
-const path = require('path');
 const sqlite = require('sqlite');
-const jimp = require('jimp');
 const token = process.env.token;
 bot.commands = new Discord.Collection();
+let rcoins = require("./playerequipment/coins.json");
+let coins = require("./coins.json");
+let xp = require("./xp.json");
 let purple = botconfig.purple;
 let cooldown = new Set();
 let cdseconds = 5;
@@ -20,19 +17,7 @@ const money = require('discord-money');
 const moment = require('moment');
 const emoji = bot.emojis.get("559427989713190922");
 var spawning = "no";
-var cheerio = require("cheerio");
-var request = require("request");
-const yt = require("ytdl-core");
-const ffmpeg = require("ffmpeg");
-const search = require("yt-search")
-var skipping = 0;
-var skips = 3;
-var opusscript = require("opusscript");
-const active = new Map();
 
-function randomNumber(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
 
 
 sqlite.open(path.join(__dirname, 'settings.sqlite3')).then(db => {
@@ -58,27 +43,14 @@ fs.readdir("./commands/", (err, files) =>  {
   });
 });
 
-bot.on('guildMemberAdd', async member => {
-  let font = await jimp.loadFont(jimp.FONT_SANS_32_BLACK);
-  let font64 = await jimp.loadFont(jimp.FONT_SANS_64_BLACK);
-  let mask = await jimp.read('https://cdn.discordapp.com/attachments/464568657109057539/559768060035334170/Mask.png');
-  let welcome = await jimp.read('https://cdn.discordapp.com/attachments/559770699254857758/559779319505747970/w2.png');
+//bot.on("guildMemberAdd", async member => {
+  //console.log(`${member.id} joined the server.`);
 
-  jimp.read(member.user.displayAvatarURL).then(avatar => {
-    avatar.resize(318, 317);
-    mask.resize(318, 317);
-    avatar.mask(mask);
+  //let welcomechannel = member.guild.channels.find(`name`, "𝐒𝐦𝐚𝐥𝐥𝐭𝐚𝐥𝐤");
+  //welcomechannel.send(`**Salutations** ${member} **! Welcome to I'll name this server later Make sure to read the** <#417055055355576330>  **and give us an** <#451991249193533441> **!
+//You can also get** <#470308628725760000> <a:INTSL_Penny_Polendina_dance:484319534778417172>  https://gph.is/2QmZtYu`);
+//});
 
-  welcome.print(font64, 378, 165, member.user.username);
-  welcome.composite(avatar, 43, 38).write('Welcome2.png');
-  member.guild.channels.get('392772985192185857').send(`**Salutations** ${member} ** <a:intslPennyWaving:554045967511584778> ! Welcome to I'll name this server later. Make sure to read the** <#417055055355576330> **and give us an** <#451991249193533441> **!
-You can also get** <#470308628725760000> **and before you ask any questions, check out** <#550374373060509700> ** ! **`, { files: ["Welcome2.png"] });
-  console.log('Image sent!');
-  })
-  .catch(err => {
-  console.log('error sending the avatar');
-})
-});
 //bot.on("guildMemberRemove", async member => {
 
   //console.log(`${member.id} left the server.`);
@@ -121,6 +93,11 @@ You can also get** <#470308628725760000> **and before you ask any questions, che
   //sChannel.send(`${channel.name} has been deleted`);
 //});
 
+
+
+
+
+
 bot.on("ready", () => {
   console.log(`Penny has started, with ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`);
   bot.user.setActivity("I'll name this server later", {type: "WATCHING"});
@@ -130,7 +107,6 @@ bot.on("message", require('./afkListener.js'));
 
 bot.on("message", async message => {
 
-  var parts = message.content.split(" ");
   if(message.author.bot) return;
   if(message.channel.type === "dm") return;
 	let prefixes = JSON.parse(fs.readFileSync("./prefixes.json", "utf8"));
@@ -147,7 +123,7 @@ bot.on("message", async message => {
     //.setAuthor(message.author.username)
     //.setColor(botconfig.red)
     //.addField("❌Error", "You need to wait 5 secs between commands.");
-    //return message.channel.send(cdembed).then(message => {message.delete(3000)});1
+    //return message.channel.send(cdembed).then(msg => {msg.delete(3000)});1
   //}
   if(!message.member.hasPermission("ADMINISTRATOR")){
     cooldown.add(message.author.id);
@@ -155,16 +131,33 @@ bot.on("message", async message => {
   let messageArray = message.content.split(" ");
   let cmd = messageArray[0];
   let args = messageArray.slice(1);
-  let commandfile = bot.commands.get(cmd.slice(prefix.length));
-  try {
-  let ops = {
-      active: active
-  }
-    if(commandfile) commandfile.run(bot,message,args,ops);
-}catch (e) {
-  console.log(e.stack);
+
+  if(!rcoins[message.author.id]) coins[message.author.id] = {
+    coins: 0
+  };
+
+  let chancenum = Math.floor(Math.random()* 15);
+  let onnum = Math.floor(Math.random() * 15);
+  if(chancenum === onnum){
+    let rcoinamount = chancenum + 1;
+    rcoins[message.author.id] = {
+      rcoins: rcoins[message.author.id].coins + rcoinamount
+    };
+    let rcoinsembed = new Discord.RichEmbed()
+    .setAuthor(message.author.username)
+    .setColor(botconfig.purple)
+    .addField("💰", `${rcoinamount} pennies added!`);
+    //message.channel.send(rcoinsembed).then(msg => msg.delete(5000));
+    console.log(`${rcoinamount} pennies added to ${message.author.username}`);
+
+    fs.writeFile("./playerequipment/coins.json", JSON.stringify(coins), (err) => {
+      if (err) console.log(err)
+    });
 
   }
+
+  let commandfile = bot.commands.get(cmd.slice(prefix.length));
+  if(commandfile) commandfile.run(bot,message,args);
 
   setTimeout(() => {
     cooldown.delete(message.author.id);
@@ -173,12 +166,62 @@ bot.on("message", async message => {
 if(message.author.bot) return;
 if(message.channel.type === "dm") return;
 
+
+
+if(!coins[message.author.id]){
+	coins[message.author.id] = {
+		coins: 0
+	};
+}
+
 let coinAmt = Math.floor(Math.random() * 15) + 1;
 let baseAmt = Math.floor(Math.random() * 15) + 1;
 console.log(`${coinAmt} ; ${baseAmt}`);
 
+if(coinAmt === baseAmt){
+	coins[message.author.id] = {
+		coins: coins[message.author.id].coins + coinAmt
+	};
+fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+	if (err) console.log(err)
+});
+let coinEmbed = new Discord.RichEmbed()
+.setAuthor(message.author.username)
+.setColor("#0000FF")
+.addField("<:Pennies_HEADS:470660608736624640>", `${coinAmt} coins added!`);
+
+//message.channel.send(coinEmbed).then(msg => {msg.delete(5000)});
+}
 
 
+let xpAdd = Math.floor(Math.random() * 7) + 8;
+console.log(xpAdd);
+
+if(!xp[message.author.id]){
+xp[message.author.id] = {
+	xp: 0,
+	level: 1
+};
+}
+
+let curxp = xp[message.author.id].xp;
+let curlvl = xp[message.author.id].level;
+let nxtLvl = xp[message.author.id].level * 800;
+xp[message.author.id].xp =  curxp + xpAdd;
+if(nxtLvl <= xp[message.author.id].xp){
+xp[message.author.id].level = curlvl + 1;
+let lvlup = new Discord.RichEmbed()
+.setAuthor(message.author.username)
+.setTitle("Level Up!")
+.setColor(purple)
+.addField("New Level", curlvl + 1);
+
+
+//message.channel.send(lvlup).then(msg => {msg.delete(5000)});
+}
+fs.writeFile("./xp.json", JSON.stringify(xp), (err) => {
+if(err) console.log(err)
+});
 
 
 //let prefix = prefixes[message.guild.id].prefixes;
@@ -192,14 +235,14 @@ var command = message.content.toLowerCase().slice(prefix.length).split(' ')[0];
 
 if (command === "active") {
     if(!message.member.hasPermission('ADMINISTRATOR')) return message.reply("Sorry, you can't do it, you are not an admin!");
-    const spawningLien = setInterval(() => {
+    const spawningCoins = setInterval(() => {
 
-                spawnLIen();
+                spawnCoins();
                 message.channel.send({embed: {
                     color: 3447003,
-                    description: 'Some Lien have been randomly spawned! ' + "\n" + 'Amount: ' + "400"+ "\n" + "Use \`>grab`\ to grab them!",
+                    description: 'Some Lien have been randomly spawned! ' + "\n" + 'Amount: ' + "400"+ "\n" + "Use \`!grab`\ to grab them!",
                     author: {
-                        name: `Lien Spawn!`,
+                        name: `Coins Spawn!`,
                         icon_url: bot.avatarURL
                     }
                 }});
@@ -208,17 +251,17 @@ if (command === "active") {
 
 if (command === 'test') {
     if(!message.member.hasPermission('ADMINISTRATOR')) return message.reply("Sorry, you can't do it, you are not an admin!");
-    const liens = bot.emojis.find(emoji => emoji.name === "Lien");
+    const liens = bot.emojis.find(emoji => emoji.name === "liens");
     message.reply("bot's working!" + ` ${liens}`)
 }
 
 if (command === 'balance') {
-    const liens = bot.emojis.find(emoji => emoji.name === "Lien");
+    const liens = bot.emojis.find(emoji => emoji.name === "liens");
     money.fetchBal(message.author.id).then((i) => { // money.fetchBal grabs the userID, finds it, and puts it into 'i'.
     message.reply("**Your balance:** "  + `${i.money}` + `${liens}`);
 })
 }
-if (command === 'addmoney') {
+if (command === 'add') {
     var user = message.mentions.users.first() || message.author
     var payMoney = args[0]
     if (!args[0]) {
@@ -226,7 +269,7 @@ if (command === 'addmoney') {
     }
     if(!message.member.hasPermission('ADMINISTRATOR')) return message.reply("Sorry, you can't do it, you are not an admin!");
 
-    const liens = bot.emojis.find(emoji => emoji.name === "Lien");
+    const liens = bot.emojis.find(emoji => emoji.name === "liens");
     money.updateBal(user.id, args[0] ).then((i) => { // money.updateBal grabs the (userID, value) value being how much you want to add, and puts it into 'i'.
     message.channel.send(user + " **You got ** " +payMoney+ " Lien from an Admin!" + "\n" + "**New Balance:** " + `${i.money}` + `${liens}`);
 
@@ -242,7 +285,7 @@ if (command === 'pay') {
     if (!message.mentions.users.first()){
         return message.reply("Please, specify a user!")
     }
-    const liens = bot.emojis.find(emoji => emoji.name === "Lien");
+    const liens = bot.emojis.find(emoji => emoji.name === "liens");
 
     money.updateBal(message.author.id, -0).then((i) => {
         if (i.money < args[0]) {
@@ -257,12 +300,12 @@ if (command === 'pay') {
 
 }
 
-if (command === 'clearbalance') {
+if (command === 'clear') {
     var user = message.mentions.users.first() || message.author
     var payMoney = args[0]
     if(!message.member.hasPermission('ADMINISTRATOR')) return message.reply("Sorry, you can't do it, you are not an admin!");
 
-    const liens = bot.emojis.find(emoji => emoji.name === "Lien");
+    const liens = bot.emojis.find(emoji => emoji.name === "liens");
     money.updateBal(user.id, -0 ).then((i) => {
         money.updateBal(user.id, -`${i.money}`) // money.updateBal grabs the (userID, value) value being how much you want to add, and puts it into 'i'.
     message.channel.send(user + " **Your Balance has been cleared by an admin!**" + "\n" + "**New Balance:**" + `0` + `${liens}`);
@@ -276,7 +319,7 @@ if (command === 'spawn') {
     spawning = "yes";
      message.channel.send({embed: {
         color: 3447003,
-        description: 'Some Lien have been spawned by an admin! ' + "\n" + 'Amount: ' + "400"+ "\n" + "Use \`>grab`\ to grab them!",
+        description: 'Some Lien have been spawned by an admin! ' + "\n" + 'Amount: ' + "400"+ "\n" + "Use \`!grab`\ to grab them!",
         author: {
             name: `${message.author.username}#${message.author.discriminator}`,
             icon_url: message.author.avatarURL
@@ -306,7 +349,7 @@ if (command === 'grab') {
         money.updateBal(message.author.id, 200).then((i) => { // The daily ends of the day, so everyday they can get a daily bonus, if they missed it, they can't get it back again.
             message.channel.send({embed: {
                 color: 3447003,
-                description: 'Recieved your **200 Lien** \`>daily`\. I think you should check \`>balance\`.',
+                description: 'Recieved your **200 Lien** \`!daily`\. I think you should check \`!balance\`.',
                 author: {
                     name: `${message.author.username}#${message.author.discriminator}`,
                     icon_url: message.author.avatarURL
@@ -316,7 +359,7 @@ if (command === 'grab') {
     } else {
         message.channel.send({embed: {
             color: 3447003,
-            description: 'You already recieved your \`>daily`\. Check later **' + moment().endOf('day').fromNow() + '**.', // When you got your daily already, this message will show up.
+            description: 'You already recieved your \`!daily`\. Check later **' + moment().endOf('day').fromNow() + '**.', // When you got your daily already, this message will show up.
             author: {
                 name: `${message.author.username}#${message.author.discriminator}`,
                 icon_url: message.author.avatarURL
