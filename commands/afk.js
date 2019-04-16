@@ -41,5 +41,5 @@ function sendError(channel, message) {
 };
 
 module.exports.help = {
-  name: "afk"
+  name: "absfk"
 };
