@@ -66,8 +66,9 @@ bot.on('guildMemberAdd', async member => {
 
   welcome.print(font64, 378, 165, member.user.username);
   welcome.composite(avatar, 43, 38).write('Welcome2.png');
-  member.guild.channels.get('392772985192185857').send(`**Salutations** ${member} ** <a:intslPennyWaving:554045967511584778> ! Welcome to I'll name this server later. Make sure to read the** <#417055055355576330> **and give us an** <#451991249193533441> **!
-You can also get** <#470308628725760000> **and before you ask any questions, check out** <#550374373060509700> ** ! **`, { files: ["Welcome2.png"] });
+  member.guild.channels.get('392772985192185857').send(`**Salutations** @user  :intslPennyWaving:! **Welcome to I'll name this server later.
+Make sure to read the** <#417055055355576330> ** and give us an** <#451991249193533441> **!
+You can also get** <#470308628725760000>, <#521378227130859562> & <#570954083066970112> **. Before you ask any questions, check out** <#550374373060509700> **!** `, { files: ["Welcome2.png"] });
   console.log('Image sent!');
   })
   .catch(err => {
